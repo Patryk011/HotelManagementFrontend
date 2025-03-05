@@ -1,5 +1,9 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import "../src/assets/styles/global.scss";
+import router from "../src/router/router";
+import App from "./App.vue";
+import { ModuleRegistry, ClientSideRowModelModule } from "ag-grid-community";
 
-createApp(App).mount('#app')
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+
+createApp(App).use(router).mount("#app");
