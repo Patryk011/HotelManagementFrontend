@@ -13,7 +13,6 @@ const initKeycloak = (): Promise<boolean> => {
     onLoad: "check-sso",
     checkLoginIframe: false,
     pkceMethod: "S256",
-    responseMode: "query",
   };
   return keycloak
     .init(options)
