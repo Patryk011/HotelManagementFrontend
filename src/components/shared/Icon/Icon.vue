@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['icon-wrapper', { 'has-hover': props.hoverColor }]"
+    :class="['icon-wrapper', { 'has-hover': hoverColor }]"
     :style="iconStyles"
     v-html="iconSvgContent"
   ></div>
@@ -10,9 +10,9 @@
 import { computed, CSSProperties, onMounted, ref } from "vue";
 import { IIconProps } from "./Icon.types";
 
-const iconSvgContent = ref<string>("");
-
 const props = defineProps<IIconProps>();
+
+const iconSvgContent = ref<string>("");
 
 onMounted(async () => {
   try {
@@ -32,4 +32,23 @@ const iconStyles = computed<CSSProperties>(() => ({
   height: typeof props.height === "number" ? `${props.height}px` : props.height,
 }));
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.icon-wrapper {
+  --fill: black;
+
+  :deep(svg) {
+    height: inherit;
+    width: inherit;
+    fill: var(--fill);
+    transition: fill 0.1s ease-in, stroke 0.1s ease-in;
+  }
+
+  &.has-hover {
+    :deep(svg) {
+      &:hover {
+        fill: var(--hover-fill);
+      }
+    }
+  }
+}
+</style>

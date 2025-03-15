@@ -1,7 +1,7 @@
 <template>
   <aside :class="{ 'is-expanded': isExpanded }">
     <nav class="menu">
-      <SidebarItem to="/admin/users/" text="Użytkownicy" />
+      <SidebarItem to="/admin/users/" text="Goście" icon="Users" />
     </nav>
   </aside>
 </template>
@@ -22,7 +22,7 @@ aside {
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
-  background-color: #222b2d;
+  background-color: #2e2e2e;
   width: 60px;
   transition: width 0.3s ease-in-out;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);

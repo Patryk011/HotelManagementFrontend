@@ -1,19 +1,33 @@
 <template>
   <div class="sidebar-item-wrapper">
-    <router-link :to :class="['sidebar-item']">
+    <router-link :to :class="['sidebar-item', { active: isActive }]">
+      <div class="icon-wrapper">
+        <Icon :icon-type="icon" :color="iconColor" />
+      </div>
       <span>{{ text }}</span>
     </router-link>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useRoute } from "vue-router";
+import Icon from "../../../shared/Icon/Icon.vue";
 import { ISidebarItemProps } from "./SidebarItem.types";
+import { computed } from "vue";
 
-defineProps<ISidebarItemProps>();
+const props = defineProps<ISidebarItemProps>();
+
+const route = useRoute();
+
+const isActive = computed(() => route.path === props.to);
+
+const iconColor = computed(() =>
+  isActive.value ? "var(--active-color)" : "gray"
+);
 </script>
 <style lang="scss" scoped>
 .sidebar-item-wrapper {
-  --default-site-color: #e6000e;
+  --default-site-color: #e1cb9b;
   --active-bg-color: rgba(255, 255, 255, 0.12);
   --hover-color: rgba(255, 255, 255, 0.05);
   --text-color: #f1f5f9;
