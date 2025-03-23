@@ -4,24 +4,40 @@
     :rowData="rowData"
     :defaultColDef="defaultColDef"
     :columnDefs="colDefs"
+    style="height: 1200px"
     :pagination="true"
     :paginationPageSize="10"
-    :overlayLoadingTemplate="loadingTemplate"
-    :overlayNoRowsTemplate="noRowsTemplate"
     @cell-clicked="onCellClicked"
-    style="height: 1200px"
   />
 </template>
 
 <script setup lang="ts">
 import { AgGridVue } from "ag-grid-vue3";
-import { onMounted, ref } from "vue";
-import { UserService } from "../../services/user.service";
+import { ref } from "vue";
 
-const rowData = ref<any[]>([]);
-const loading = ref(false);
-const loadingTemplate = `<span class="ag-overlay-loading-center">Loading users...</span>`;
-const noRowsTemplate = `<span class="ag-overlay-no-rows-center">No users found</span>`;
+const rowData = ref([
+  {
+    email: "John@wp.pl",
+    roomNumber: "101",
+    checkIn: "2025-03-14",
+    checkOut: "2025-03-17",
+    status: "Zameldowany",
+  },
+  {
+    email: "Maria@onet.eu",
+    roomNumber: "205",
+    checkIn: "2025-03-15",
+    checkOut: "2025-03-18",
+    status: "Zarezerwowany",
+  },
+  {
+    email: "Robert@onet.pl",
+    roomNumber: "310",
+    checkIn: "2025-03-13",
+    checkOut: "2025-03-16",
+    status: "Wymeldowany",
+  },
+]);
 
 const colDefs = ref([
   {
@@ -31,22 +47,34 @@ const colDefs = ref([
     sortable: true,
   },
   {
-    headerName: "Imię i nazwisko",
-    field: "name",
+    headerName: "Pokój",
+    field: "roomNumber",
+    width: 120,
+    filter: true,
+  },
+  {
+    headerName: "Zameldowanie",
+    field: "checkIn",
     filter: true,
     sortable: true,
   },
   {
-    headerName: "Numer telefonu",
-    field: "phoneNumber",
+    headerName: "Wymeldowanie",
+    field: "checkOut",
     filter: true,
-    sortable: true,
+  },
+  {
+    headerName: "Status",
+    field: "status",
+    filter: true,
+    cellRenderer: statusRenderer,
   },
   {
     headerName: "Akcje",
-    cellRenderer: actionRenderer,
+    field: "actions",
     sortable: false,
     filter: false,
+    cellRenderer: actionRenderer,
     width: 120,
   },
 ]);
@@ -56,6 +84,18 @@ const defaultColDef = {
   minWidth: 100,
   resizable: true,
 };
+
+function statusRenderer(params: any) {
+  const status = params.value;
+
+  const statusColor: Record<string, string> = {
+    Zameldowany: "green",
+    Zarezerwowany: "blue",
+    Wymeldowany: "gray",
+  };
+
+  return `<span style="color: ${statusColor[status]}; font-weight: bold;">${status}</span>`;
+}
 
 function actionRenderer() {
   return `
@@ -77,29 +117,6 @@ function deleteRow(index: number) {
   updatedData.splice(index, 1);
   rowData.value = updatedData;
 }
-
-async function fetchUsers() {
-  try {
-    loading.value = true;
-
-    const response = await UserService.getUsers();
-
-    rowData.value = response.data.map((user: any) => ({
-      email: user.email,
-      name: `${user.firstName} ${user.lastName}`,
-      phoneNumber: user.phoneNumber,
-    }));
-  } catch (err) {
-    console.error(`Failed to fetch users ${err}`);
-    rowData.value = [];
-  } finally {
-    loading.value = false;
-  }
-}
-
-onMounted(async () => {
-  await fetchUsers();
-});
 </script>
 
 <style lang="scss" scoped>
