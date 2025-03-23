@@ -1,18 +1,25 @@
 <template>
   <aside :class="{ 'is-expanded': isExpanded }">
+    <MenuToggle :is-expanded @toggle="toggleExpansion" />
     <nav class="menu">
+      <SidebarItem
+        to="/admin/reservations/"
+        text="Rezerwacje"
+        icon="Reservation"
+      />
       <SidebarItem to="/admin/users/" text="Goście" icon="Users" />
+      <LogoutButton />
     </nav>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import SidebarItem from "./SidebarItem/SidebarItem.vue";
+import MenuToggle from "./MenuToggle/MenuToggle.vue";
+import { useToggleContext } from "../../../composables/useExpansion/useToggleContext";
+import LogoutButton from "./LogoutButton/LogoutButton.vue";
 
-const isExpanded = ref(true);
-
-// const toggleSidebar = () => !isExpanded.value;
+const { isExpanded, toggleExpansion } = useToggleContext();
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +64,6 @@ aside {
   }
 
   @media (max-width: 1024px) {
-    position: absolute;
     z-index: 99;
     height: 100%;
     left: 0;

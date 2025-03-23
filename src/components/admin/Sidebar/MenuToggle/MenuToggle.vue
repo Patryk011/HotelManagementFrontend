@@ -5,18 +5,21 @@
       @click="toggle"
       :class="{ expanded: isExpanded }"
     >
-      <Icon icon-type="RightArrows" :class="{ rotated: isExpanded }" />
+      <Icon
+        icon-type="RightArrows"
+        color="#ffffff"
+        :class="{ rotated: isExpanded }"
+      />
     </button>
   </div>
 </template>
 <script setup lang="ts">
+import { useToggleContext } from "../../../../composables/useExpansion/useToggleContext";
 import Icon from "../../../shared/Icon/Icon.vue";
-import { IMenuToggleProps } from "./MenuToggle.types";
 
-defineProps<IMenuToggleProps>();
+const { isExpanded } = useToggleContext();
 
 const emit = defineEmits<{ (e: "toggle"): void }>();
-
 const toggle = () => emit("toggle");
 </script>
 

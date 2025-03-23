@@ -1,5 +1,9 @@
 <template>
-  <div>Strona klienta</div>
+  <div class="client-container">
+    <header class="main-header">
+      <nav class="navigation"></nav>
+    </header>
+  </div>
 </template>
 
 <script setup lang="ts"></script>

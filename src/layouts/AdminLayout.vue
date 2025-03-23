@@ -1,9 +1,9 @@
 <template>
   <div class="admin-container">
     <Sidebar />
-    <div class="main-content">
+    <main class="main-content">
       <router-view />
-    </div>
+    </main>
   </div>
 </template>
 

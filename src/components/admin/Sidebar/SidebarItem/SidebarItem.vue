@@ -4,7 +4,7 @@
       <div class="icon-wrapper">
         <Icon :icon-type="icon" :color="iconColor" />
       </div>
-      <span>{{ text }}</span>
+      <span v-show="isExpanded">{{ text }}</span>
     </router-link>
   </div>
 </template>
@@ -14,10 +14,13 @@ import { useRoute } from "vue-router";
 import Icon from "../../../shared/Icon/Icon.vue";
 import { ISidebarItemProps } from "./SidebarItem.types";
 import { computed } from "vue";
+import { useToggleContext } from "../../../../composables/useExpansion/useToggleContext";
 
 const props = defineProps<ISidebarItemProps>();
 
 const route = useRoute();
+
+const { isExpanded } = useToggleContext();
 
 const isActive = computed(() => route.path === props.to);
 

@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AdminLayout from "../layouts/AdminLayout.vue";
-import Users from "../views/admin/Users.vue";
 import { useAuthStore } from "../stores/authStore";
-import { storeToRefs } from "pinia";
 import ClientLayout from "../layouts/ClientLayout.vue";
+import Reservations from "../views/admin/Reservations.vue";
+import Users from "../views/admin/Users.vue";
 
 const routes = [
   {
@@ -14,7 +14,10 @@ const routes = [
     path: "/admin",
     component: AdminLayout,
 
-    children: [{ path: "users", component: Users }],
+    children: [
+      { path: "reservations", component: Reservations },
+      { path: "users", component: Users },
+    ],
     meta: { requiresAuth: true },
   },
 ];

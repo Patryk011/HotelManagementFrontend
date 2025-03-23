@@ -1,4 +1,4 @@
-export type TIconTypes = "Users" | "RightArrows" | "Logout";
+export type TIconTypes = "Users" | "RightArrows" | "Logout" | "Reservation";
 
 export interface IIconProps {
   hoverColor?: string;
