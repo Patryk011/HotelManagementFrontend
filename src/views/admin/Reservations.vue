@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { AgGridVue } from "ag-grid-vue3";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
 const rowData = ref([
   {
@@ -97,7 +97,7 @@ function statusRenderer(params: any) {
   return `<span style="color: ${statusColor[status]}; font-weight: bold;">${status}</span>`;
 }
 
-function actionRenderer(params: any) {
+function actionRenderer() {
   return `
     <div class="action-buttons">
       <button class="btn-delete" data-action="delete">Usuń</button>

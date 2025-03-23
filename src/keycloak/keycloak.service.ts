@@ -127,9 +127,18 @@ const clearTokenRefreshInterval = (): void => {
 
 const register = (): Promise<void> => keycloak.register();
 
-const logout = (): Promise<void> => {
+const keycloakLogout = (): Promise<void> => {
   clearTokenRefreshInterval();
-  return keycloak.logout();
+  return keycloak.logout({
+    redirectUri: window.location.origin,
+  });
 };
 
-export { initKeycloak, register, getToken, keycloak, refreshToken, logout };
+export {
+  initKeycloak,
+  register,
+  getToken,
+  keycloak,
+  refreshToken,
+  keycloakLogout,
+};

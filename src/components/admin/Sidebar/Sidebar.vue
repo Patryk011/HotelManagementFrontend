@@ -62,18 +62,5 @@ aside {
       opacity: 1;
     }
   }
-
-  @media (max-width: 1024px) {
-    z-index: 99;
-    height: 100%;
-    left: 0;
-    top: 0;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-
-    &.is-expanded {
-      transform: translateX(0);
-    }
-  }
 }
 </style>

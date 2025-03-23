@@ -10,7 +10,7 @@ import { useAuthStore } from "./stores/authStore";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const pinia = createPinia();
-initKeycloak().then((authenticated) => {
+initKeycloak().then(() => {
   const app = createApp(App);
   app.use(pinia);
   app.use(router);

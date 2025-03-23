@@ -57,7 +57,7 @@ const defaultColDef = {
   resizable: true,
 };
 
-function actionRenderer(params: any) {
+function actionRenderer() {
   return `
     <div class="action-buttons">
       <button class="btn-delete" data-action="delete">Usuń</button>
