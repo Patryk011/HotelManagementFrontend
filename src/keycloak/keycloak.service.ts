@@ -1,9 +1,15 @@
 import Keycloak, { KeycloakConfig, KeycloakInitOptions } from "keycloak-js";
 
+const getClientId = (): string => {
+  const path = window.location.pathname;
+
+  return path.startsWith("/admin") ? "hotel-client" : "hotel-worker";
+};
+
 const initOptions: KeycloakConfig = {
   url: "http://keycloak-local.pl:8080",
   realm: "hotel-realm",
-  clientId: "hotel-client",
+  clientId: getClientId(),
 };
 
 const keycloak = new Keycloak(initOptions);

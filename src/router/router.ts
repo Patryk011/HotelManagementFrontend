@@ -20,6 +20,14 @@ const routes = [
     ],
     meta: { requiresAuth: true },
   },
+  {
+    path: "/worker",
+    component: AdminLayout,
+    meta: {
+      requiresAuth: true,
+      roles: ["worker"],
+    },
+  },
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });
@@ -29,9 +37,15 @@ router.beforeEach(async (to, from, next) => {
 
   await authStore.initAuth();
 
+  const isWorkerRoute = to.path.startsWith("/worker");
+
+  const isAdminRoute = to.path.startsWith("/admin");
+
   if (to.meta.requiresAuth) {
     if (!authStore.isAuthenticated) {
-      return authStore.login();
+      if (isAdminRoute || isWorkerRoute) {
+        return authStore.login();
+      }
     }
   }
 
